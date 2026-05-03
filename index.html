@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@placeholder — digital space</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.16);
+    --text-primary: #f0ede8;
+    --text-muted: #6b6862;
+    --text-mid: #a09c97;
+    --accent: #c9f53b;
+    --accent-dim: rgba(201,245,59,0.12);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .nav-social {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .social-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .social-pill:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    background: var(--surface);
+  }
+
+  .social-pill svg { width: 12px; height: 12px; fill: currentColor; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+
+  .hero-title em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .hero-meta {
+    text-align: right;
+  }
+
+  .hero-meta p {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 2;
+  }
+
+  .hero-meta span { color: var(--text-mid); }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* ── FEED ── */
+  .x-embed-wrapper {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .embed-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .x-icon { width: 20px; height: 20px; }
+
+  .embed-header-text {
+    font-size: 0.75rem;
+    color: var(--text-mid);
+  }
+
+  .embed-header-text strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .live-dot {
+    margin-left: auto;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .tweet-list {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .tweet-card {
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .tweet-card:hover { background: var(--surface2); }
+
+  .tweet-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.6rem;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent-dim);
+    border: 1px solid rgba(201,245,59,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .tweet-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .tweet-handle {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  .tweet-time {
+    margin-left: auto;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  .tweet-body {
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    padding-left: 46px;
+  }
+
+  .tweet-actions {
+    display: flex;
+    gap: 1.5rem;
+    padding-left: 46px;
+    margin-top: 0.6rem;
+  }
+
+  .tweet-action {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .feed-footer {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .feed-footer a {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .feed-footer a:hover { color: var(--accent); }
+
+  /* ── SPOTIFY SIDEBAR ── */
+  .spotify-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .spotify-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--surface);
+    transition: border-color 0.2s;
+  }
+
+  .spotify-card:hover { border-color: var(--border-hover); }
+
+  .spotify-card-header {
+    padding: 1rem 1.25rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .spotify-icon { width: 20px; height: 20px; }
+
+  .spotify-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .spotify-embed {
+    display: block;
+    width: 100%;
+    border: none;
+  }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .site-footer p {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem; }
+    .nav-links { display: none; }
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 3rem 1rem 2rem;
+    }
+    .hero-meta { text-align: left; }
+    .main-grid {
+      grid-template-columns: 1fr;
+      padding: 2rem 1rem;
+    }
+    .hero-title { font-size: clamp(3rem, 12vw, 5rem); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<!-- TO CUSTOMIZE: Replace @placeholder with your X handle, update href links -->
+<nav>
+  <div class="nav-logo">@ibrabarrios</div>
+  <ul class="nav-links">
+    <li><a href="#feed">feed</a></li>
+  </ul>
+  <div class="nav-social">
+    <!-- TO CUSTOMIZE: Replace href="#" with your actual X profile URL -->
+    <a class="social-pill" href="https://x.com/insecurefarts" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.735-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      @ibrabarrios
+    </a>
+    <!-- TO CUSTOMIZE: Replace href="#" with your Facebook page URL -->
+    <a class="social-pill" href="https://www.facebook.com/profile.php?id=61565720026453" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      /chill amigo all is well
+    </a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<!-- TO CUSTOMIZE: Update city/country in hero-meta -->
+<div class="hero">
+  <h1 class="hero-title">
+    melt your headaches<br>
+    <em>call it home</em>
+  </h1>
+  <div class="hero-meta">
+    <p>updated <span>live</span></p>
+    <p>est. <span>2025</span></p>
+  </div>
+</div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<div class="main-grid">
+
+  <!-- FEED COLUMN -->
+  <div class="feed-col" id="feed">
+    <div class="section-label">latest posts</div>
+
+    <!--
+      OPTION A — MOCK FEED (currently active):
+      Replace the tweet content below with your own real posts.
+      Update the href in .feed-footer to point to your X profile.
+
+      OPTION B — OFFICIAL X EMBED (uncomment the block below and remove the mock):
+      Go to https://publish.twitter.com, enter your profile URL,
+      choose "Embedded Timeline", copy the <a> tag value,
+      and paste it as the data-widget-id or use the full blockquote embed code.
+    -->
+
+    <div class="x-embed-wrapper">
+      <div class="embed-header">
+        <svg class="x-icon" viewBox="0 0 24 24" fill="#f0ede8">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.735-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        <!-- TO CUSTOMIZE: Replace @yourhandle -->
+        <div class="embed-header-text"><strong>@yourhandle</strong> on X</div>
+        <div class="live-dot"></div>
+      </div>
+
+      <div class="tweet-list">
+
+        <!-- TWEET 1 — TO CUSTOMIZE: Replace with your real post content -->
+        <div class="tweet-card">
+          <div class="tweet-top">
+            <!-- TO CUSTOMIZE: Replace "G" with your initial -->
+            <div class="avatar">G</div>
+            <div>
+              <!-- TO CUSTOMIZE: Replace name and handle -->
+              <div class="tweet-name">Gnomo</div>
+              <div class="tweet-handle">@yourhandle</div>
+            </div>
+            <div class="tweet-time">2h</div>
+          </div>
+          <div class="tweet-body">
+            just dropped a new lo-fi playlist. been in a creative flow lately, something about late nights and headphones just hits different 🎧
+          </div>
+          <div class="tweet-actions">
+            <span class="tweet-action">♡ 47</span>
+            <span class="tweet-action">↺ 12</span>
+            <span class="tweet-action">↗ share</span>
+          </div>
+        </div>
+
+        <!-- TWEET 2 -->
+        <div class="tweet-card">
+          <div class="tweet-top">
+            <div class="avatar">G</div>
+            <div>
+              <div class="tweet-name">Gnomo</div>
+              <div class="tweet-handle">@yourhandle</div>
+            </div>
+            <div class="tweet-time">1d</div>
+          </div>
+          <div class="tweet-body">
+            been deep into hermetic philosophy again. the principle of correspondence is one of the most elegant ideas ever written. "as above, so below" — applies to everything.
+          </div>
+          <div class="tweet-actions">
+            <span class="tweet-action">♡ 103</span>
+            <span class="tweet-action">↺ 31</span>
+            <span class="tweet-action">↗ share</span>
+          </div>
+        </div>
+
+        <!-- TWEET 3 -->
+        <div class="tweet-card">
+          <div class="tweet-top">
+            <div class="avatar">G</div>
+            <div>
+              <div class="tweet-name">Gnomo</div>
+              <div class="tweet-handle">@yourhandle</div>
+            </div>
+            <div class="tweet-time">3d</div>
+          </div>
+          <div class="tweet-body">
+            first session in FL Studio. made something that sounds like an error message but i'm calling it experimental. baby steps 🎹
+          </div>
+          <div class="tweet-actions">
+            <span class="tweet-action">♡ 88</span>
+            <span class="tweet-action">↺ 19</span>
+            <span class="tweet-action">↗ share</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="feed-footer">
+        <!-- TO CUSTOMIZE: Replace href with your X profile URL -->
+        <a href="https://x.com/yourhandle" target="_blank" rel="noopener">view all on x →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPOTIFY SIDEBAR -->
+  <div class="sidebar" id="music">
+    <div class="section-label">now playing</div>
+
+    <div class="spotify-stack">
+
+      <!--
+        HOW TO GET YOUR PLAYLIST EMBED URL:
+        1. Open Spotify (desktop app or web)
+        2. Find the playlist you want to share
+        3. Click the three dots (···) → Share → Copy embed code
+        4. The embed code contains a URL like:
+           https://open.spotify.com/embed/playlist/PLAYLIST_ID_HERE
+        5. Replace the src URL below with your own
+      -->
+
+      <!-- PLAYLIST 1 — TO CUSTOMIZE: Replace src with your own Spotify embed URL -->
+      <div class="spotify-card">
+        <div class="spotify-card-header">
+          <svg class="spotify-icon" viewBox="0 0 24 24" fill="#1DB954">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+          </svg>
+          <!-- TO CUSTOMIZE: Update label with your playlist name/vibe -->
+          <div class="spotify-label">playlist · currently listening</div>
+        </div>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5T2VP2caz8yP8HJGmst1bd?utm_source=generator" width="100%" height="600" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+
+      <!-- PLAYLIST 2 — TO CUSTOMIZE: Replace src with your own Spotify embed URL -->
+      <div class="spotify-card">
+        <div class="spotify-card-header">
+          <svg class="spotify-icon" viewBox="0 0 24 24" fill="#1DB954">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+          </svg>
+          <!-- TO CUSTOMIZE: Update label -->
+          <div class="spotify-label">playlist · all my fav songs in a playlist that is not liked songs (y)</div>
+        </div>
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0pmpavIB5LrapJ3RhJc8Ja?utm_source=generator" width="100%" height="600" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<!-- TO CUSTOMIZE: Update year, handle, and location -->
+<footer class="site-footer" id="links">
+  <p>© 2025 @placeholder · built with intention</p>
+  <div class="footer-dot"></div>
+  <p>reynosa, mx</p>
+</footer>
+
+</body>
+</html>
