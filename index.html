@@ -207,97 +207,7 @@
     50% { opacity: 0.3; }
   }
 
-  .tweet-list {
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .tweet-card {
-    padding: 1rem 1.25rem;
-    border-radius: 12px;
-    transition: background 0.2s;
-    cursor: pointer;
-  }
-
-  .tweet-card:hover { background: var(--surface2); }
-
-  .tweet-top {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 0.6rem;
-  }
-
-  .avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--accent-dim);
-    border: 1px solid rgba(201,245,59,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    color: var(--accent);
-    font-weight: 500;
-    flex-shrink: 0;
-  }
-
-  .tweet-name {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--text-primary);
-  }
-
-  .tweet-handle {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-  }
-
-  .tweet-time {
-    margin-left: auto;
-    font-size: 0.65rem;
-    color: var(--text-muted);
-  }
-
-  .tweet-body {
-    font-size: 0.82rem;
-    color: var(--text-mid);
-    line-height: 1.6;
-    padding-left: 46px;
-  }
-
-  .tweet-actions {
-    display: flex;
-    gap: 1.5rem;
-    padding-left: 46px;
-    margin-top: 0.6rem;
-  }
-
-  .tweet-action {
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .feed-footer {
-    padding: 1rem 1.25rem;
-    border-top: 1px solid var(--border);
-    text-align: center;
-  }
-
-  .feed-footer a {
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-decoration: none;
-  }
-
+ 
   .feed-footer a:hover { color: var(--accent); }
 
   /* ── SPOTIFY SIDEBAR ── */
@@ -379,9 +289,261 @@
     }
     .hero-title { font-size: clamp(3rem, 12vw, 5rem); }
   }
+
+
+.spotify-stats { max-width: 1200px; margin: 0 auto; padding: 0 2rem 3rem; }
+ 
+.now-playing-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+  transition: border-color 0.2s;
+}
+.now-playing-card:hover { border-color: var(--border-hover); }
+.now-playing-card.inactive { opacity: 0.5; }
+ 
+.now-playing-art {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--surface2);
+}
+ 
+.now-playing-info { flex: 1; min-width: 0; }
+.now-playing-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #1DB954;
+  margin-bottom: 4px;
+}
+.now-playing-track {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.now-playing-artist {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+ 
+.equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.equalizer span {
+  width: 3px;
+  background: #1DB954;
+  border-radius: 2px;
+  animation: eq 0.8s ease-in-out infinite alternate;
+}
+.equalizer span:nth-child(1) { height: 40%; animation-delay: 0s; }
+.equalizer span:nth-child(2) { height: 80%; animation-delay: 0.2s; }
+.equalizer span:nth-child(3) { height: 60%; animation-delay: 0.1s; }
+.equalizer span:nth-child(4) { height: 100%; animation-delay: 0.3s; }
+ 
+@keyframes eq {
+  from { transform: scaleY(0.4); }
+  to   { transform: scaleY(1); }
+}
+ 
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+ 
+.stats-col-title {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.stats-col-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+ 
+.stats-list { display: flex; flex-direction: column; gap: 4px; }
+ 
+.stats-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: background 0.2s;
+  text-decoration: none;
+  cursor: pointer;
+}
+.stats-item:hover { background: var(--surface2); }
+ 
+.stats-rank {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+ 
+.stats-art {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--surface2);
+}
+.stats-art.round { border-radius: 50%; }
+ 
+.stats-info { flex: 1; min-width: 0; }
+.stats-name {
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stats-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+.stats-loading {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  padding: 1rem 0;
+  letter-spacing: 0.08em;
+}
+ 
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .now-playing-card { flex-wrap: wrap; }
+}
+
 </style>
 </head>
+<script>
+  const API = "https://spotify-backend-umber.vercel.app";
+ 
+  // NOW PLAYING
+  async function loadNowPlaying() {
+    try {
+      const res = await fetch(`${API}/now-playing`);
+      const data = await res.json();
+      const card = document.getElementById("now-playing-card");
+      const label = document.getElementById("now-playing-label");
+      const track = document.getElementById("now-playing-track");
+      const artist = document.getElementById("now-playing-artist");
+      const art = document.getElementById("now-playing-art");
+      const eq = document.getElementById("equalizer");
+ 
+      if (data.is_playing && data.item) {
+        card.classList.remove("inactive");
+        label.textContent = "reproduciendo ahora";
+        track.textContent = data.item.name;
+        artist.textContent = data.item.artists.map(a => a.name).join(", ");
+        art.src = data.item.album.images[1]?.url || data.item.album.images[0]?.url;
+        eq.style.display = "flex";
+      } else {
+        label.textContent = "sin reproducir";
+        track.textContent = "nada por ahora";
+        artist.textContent = "";
+        eq.style.display = "none";
+      }
+    } catch (e) {
+      console.error("now-playing error:", e);
+    }
+  }
+ 
+  // TOP ARTISTAS
+  async function loadTopArtists() {
+    try {
+      const res = await fetch(`${API}/top-artists`);
+      const data = await res.json();
+      const list = document.getElementById("top-artists-list");
+ 
+      if (!data.items || data.items.length === 0) {
+        list.innerHTML = '<div class="stats-loading">sin datos</div>';
+        return;
+      }
+ 
+      list.innerHTML = data.items.map((artist, i) => `
+        <a class="stats-item" href="${artist.external_urls.spotify}" target="_blank" rel="noopener">
+          <span class="stats-rank">${i + 1}</span>
+          <img class="stats-art round" src="${artist.images[2]?.url || artist.images[0]?.url}" alt="${artist.name}">
+          <div class="stats-info">
+            <div class="stats-name">${artist.name}</div>
+            <div class="stats-sub">${artist.genres[0] || "artist"}</div>
+          </div>
+        </a>
+      `).join("");
+    } catch (e) {
+      console.error("top-artists error:", e);
+    }
+  }
+ 
+  // TOP TRACKS
+  async function loadTopTracks() {
+    try {
+      const res = await fetch(`${API}/top-tracks`);
+      const data = await res.json();
+      const list = document.getElementById("top-tracks-list");
+ 
+      if (!data.items || data.items.length === 0) {
+        list.innerHTML = '<div class="stats-loading">sin datos</div>';
+        return;
+      }
+ 
+      list.innerHTML = data.items.map((track, i) => `
+        <a class="stats-item" href="${track.external_urls.spotify}" target="_blank" rel="noopener">
+          <span class="stats-rank">${i + 1}</span>
+          <img class="stats-art" src="${track.album.images[2]?.url || track.album.images[0]?.url}" alt="${track.name}">
+          <div class="stats-info">
+            <div class="stats-name">${track.name}</div>
+            <div class="stats-sub">${track.artists.map(a => a.name).join(", ")}</div>
+          </div>
+        </a>
+      `).join("");
+    } catch (e) {
+      console.error("top-tracks error:", e);
+    }
+  }
+ 
+  // Cargar todo al iniciar
+  loadNowPlaying();
+  loadTopArtists();
+  loadTopTracks();
+ 
+  // Refrescar now playing cada 30 segundos
+  setInterval(loadNowPlaying, 30000);
+</script>
 <body>
+
+  
 
 <!-- ═══ NAV ═══ -->
 <!-- TO CUSTOMIZE: Replace @placeholder with your X handle, update href links -->
@@ -392,12 +554,12 @@
   </ul>
   <div class="nav-social">
     <!-- TO CUSTOMIZE: Replace href="#" with your actual X profile URL -->
-    <a class="social-pill" href="https://x.com/insecurefarts" target="_blank" rel="noopener">
+    <a class="social-pill" href="https://x.com/insecurefarts" target="_blank" rel="noopener" style="visibility:hidden">
       <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.735-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       @ibrabarrios
     </a>
     <!-- TO CUSTOMIZE: Replace href="#" with your Facebook page URL -->
-    <a class="social-pill" href="https://www.facebook.com/profile.php?id=61565720026453" target="_blank" rel="noopener">
+    <a class="social-pill" href="https://www.facebook.com/profile.php?id=61565720026453" target="_blank" rel="noopener" style="visibility:hidden">
       <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
       /chill amigo all is well
     </a>
@@ -420,103 +582,7 @@
 <!-- ═══ MAIN CONTENT ═══ -->
 <div class="main-grid">
 
-  <!-- FEED COLUMN -->
-  <div class="feed-col" id="feed">
-    <div class="section-label">latest posts</div>
 
-    <!--
-      OPTION A — MOCK FEED (currently active):
-      Replace the tweet content below with your own real posts.
-      Update the href in .feed-footer to point to your X profile.
-
-      OPTION B — OFFICIAL X EMBED (uncomment the block below and remove the mock):
-      Go to https://publish.twitter.com, enter your profile URL,
-      choose "Embedded Timeline", copy the <a> tag value,
-      and paste it as the data-widget-id or use the full blockquote embed code.
-    -->
-
-    <div class="x-embed-wrapper">
-      <div class="embed-header">
-        <svg class="x-icon" viewBox="0 0 24 24" fill="#f0ede8">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.735-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-        <!-- TO CUSTOMIZE: Replace @yourhandle -->
-        <div class="embed-header-text"><strong>@yourhandle</strong> on X</div>
-        <div class="live-dot"></div>
-      </div>
-
-      <div class="tweet-list">
-
-        <!-- TWEET 1 — TO CUSTOMIZE: Replace with your real post content -->
-        <div class="tweet-card">
-          <div class="tweet-top">
-            <!-- TO CUSTOMIZE: Replace "G" with your initial -->
-            <div class="avatar">G</div>
-            <div>
-              <!-- TO CUSTOMIZE: Replace name and handle -->
-              <div class="tweet-name">Gnomo</div>
-              <div class="tweet-handle">@yourhandle</div>
-            </div>
-            <div class="tweet-time">2h</div>
-          </div>
-          <div class="tweet-body">
-            just dropped a new lo-fi playlist. been in a creative flow lately, something about late nights and headphones just hits different 🎧
-          </div>
-          <div class="tweet-actions">
-            <span class="tweet-action">♡ 47</span>
-            <span class="tweet-action">↺ 12</span>
-            <span class="tweet-action">↗ share</span>
-          </div>
-        </div>
-
-        <!-- TWEET 2 -->
-        <div class="tweet-card">
-          <div class="tweet-top">
-            <div class="avatar">G</div>
-            <div>
-              <div class="tweet-name">Gnomo</div>
-              <div class="tweet-handle">@yourhandle</div>
-            </div>
-            <div class="tweet-time">1d</div>
-          </div>
-          <div class="tweet-body">
-            been deep into hermetic philosophy again. the principle of correspondence is one of the most elegant ideas ever written. "as above, so below" — applies to everything.
-          </div>
-          <div class="tweet-actions">
-            <span class="tweet-action">♡ 103</span>
-            <span class="tweet-action">↺ 31</span>
-            <span class="tweet-action">↗ share</span>
-          </div>
-        </div>
-
-        <!-- TWEET 3 -->
-        <div class="tweet-card">
-          <div class="tweet-top">
-            <div class="avatar">G</div>
-            <div>
-              <div class="tweet-name">Gnomo</div>
-              <div class="tweet-handle">@yourhandle</div>
-            </div>
-            <div class="tweet-time">3d</div>
-          </div>
-          <div class="tweet-body">
-            first session in FL Studio. made something that sounds like an error message but i'm calling it experimental. baby steps 🎹
-          </div>
-          <div class="tweet-actions">
-            <span class="tweet-action">♡ 88</span>
-            <span class="tweet-action">↺ 19</span>
-            <span class="tweet-action">↗ share</span>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="feed-footer">
-        <!-- TO CUSTOMIZE: Replace href with your X profile URL -->
-        <a href="https://x.com/yourhandle" target="_blank" rel="noopener">view all on x →</a>
-      </div>
-    </div>
-  </div>
 
   <!-- SPOTIFY SIDEBAR -->
   <div class="sidebar" id="music">
@@ -524,6 +590,43 @@
 
     <div class="spotify-stack">
 
+      <div class="spotify-stats" id="spotify-stats">
+  <div class="section-label">spotify stats</div>
+ 
+  <!-- NOW PLAYING -->
+  <div class="now-playing-card inactive" id="now-playing-card">
+    <img class="now-playing-art" id="now-playing-art" src="" alt="album art">
+    <div class="now-playing-info">
+      <div class="now-playing-label" id="now-playing-label">sin reproducir</div>
+      <div class="now-playing-track" id="now-playing-track">—</div>
+      <div class="now-playing-artist" id="now-playing-artist">—</div>
+    </div>
+    <div class="equalizer" id="equalizer" style="display:none">
+      <span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+ 
+  <!-- TOP ARTISTAS Y TRACKS -->
+  <div class="stats-grid">
+ 
+    <!-- TOP ARTISTAS -->
+    <div>
+      <div class="stats-col-title">top artistas</div>
+      <div class="stats-list" id="top-artists-list">
+        <div class="stats-loading">cargando...</div>
+      </div>
+    </div>
+ 
+    <!-- TOP TRACKS -->
+    <div>
+      <div class="stats-col-title">top tracks</div>
+      <div class="stats-list" id="top-tracks-list">
+        <div class="stats-loading">cargando...</div>
+      </div>
+    </div>
+ 
+  </div>
+</div>
       <!--
         HOW TO GET YOUR PLAYLIST EMBED URL:
         1. Open Spotify (desktop app or web)
